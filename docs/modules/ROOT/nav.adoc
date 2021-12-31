@@ -1,4 +1,5 @@
 * xref:index.adoc[Overview]
+* xref:wizard.adoc[Wizard]
 * xref:extending-contracts.adoc[Extending Contracts]
 * xref:upgradeable.adoc[Using with Upgrades]
 
@@ -12,5 +13,7 @@
 ** xref:erc721.adoc[ERC721]
 ** xref:erc777.adoc[ERC777]
 ** xref:erc1155.adoc[ERC1155]
+
+* xref:governance.adoc[Governance]
 
 * xref:utilities.adoc[Utilities]

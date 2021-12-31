@@ -22,7 +22,7 @@ contract('ERC721URIStorage', function (accounts) {
       await this.token.mint(owner, firstTokenId);
     });
 
-    const baseURI = 'https://api.com/v1/';
+    const baseURI = 'https://api.example.com/v1/';
     const sampleUri = 'mock://mytoken';
 
     it('it is empty by default', async function () {
@@ -62,7 +62,7 @@ contract('ERC721URIStorage', function (accounts) {
       await this.token.setBaseURI(baseURI);
       await this.token.setTokenURI(firstTokenId, sampleUri);
 
-      const newBaseURI = 'https://api.com/v2/';
+      const newBaseURI = 'https://api.example.com/v2/';
       await this.token.setBaseURI(newBaseURI);
       expect(await this.token.tokenURI(firstTokenId)).to.be.equal(newBaseURI + sampleUri);
     });
@@ -71,6 +71,15 @@ contract('ERC721URIStorage', function (accounts) {
       await this.token.setBaseURI(baseURI);
 
       expect(await this.token.tokenURI(firstTokenId)).to.be.equal(baseURI + firstTokenId);
+    });
+
+    it('tokens without URI can be burnt ', async function () {
+      await this.token.burn(firstTokenId, { from: owner });
+
+      expect(await this.token.exists(firstTokenId)).to.equal(false);
+      await expectRevert(
+        this.token.tokenURI(firstTokenId), 'ERC721URIStorage: URI query for nonexistent token',
+      );
     });
 
     it('tokens with URI can be burnt ', async function () {

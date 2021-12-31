@@ -42,8 +42,10 @@ publish() {
   npm publish --tag "$dist_tag" --otp "$(prompt_otp)"
 
   log "Publishing @openzeppelin/contracts on npm"
+  cd contracts
   env ALREADY_COMPILED= \
-      npm publish contracts --tag "$dist_tag" --otp "$(prompt_otp)"
+      npm publish --tag "$dist_tag" --otp "$(prompt_otp)"
+  cd ..
 
   if [[ "$dist_tag" == "latest" ]]; then
     otp="$(prompt_otp)"
@@ -140,6 +142,8 @@ elif [[ "$*" == "final" ]]; then
   push_release_branch_and_tag
 
   push_and_publish latest
+
+  npm deprecate 'openzeppelin-solidity@>=4.0.0' "This package is now published as @openzeppelin/contracts. Please change your dependency."
 
   log "Remember to merge the release branch into master and push upstream"
 
